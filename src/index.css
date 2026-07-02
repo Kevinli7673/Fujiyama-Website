@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif-display: "Instrument Serif", Georgia, serif;
+  --font-sans-body: "Instrument Sans", ui-sans-serif, sans-serif;
+}
+
+:root {
+  color: white;
+}
+
+body {
+  color: white;
+}
+
+.hero-btn-reserve {
+  background-color: #c0272d;
+}
+
+.hero-btn-reserve:hover {
+  background-color: #a31f24;
+}
+
+.hero-btn-menu:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Stack hero buttons on small screens */
+@media (max-width: 640px) {
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .hero-btn-reserve,
+  .hero-btn-menu {
+    width: min(100%, 340px);
+    justify-content: center;
+  }
+}
