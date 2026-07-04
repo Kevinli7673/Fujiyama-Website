@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif-display: "Instrument Serif", Georgia, serif;
-  --font-sans-body: "Instrument Sans", ui-sans-serif, sans-serif;
+  --font-serif-display: var(--font-instrument-serif), Georgia, serif;
+  --font-sans-body: var(--font-instrument-sans), ui-sans-serif, sans-serif;
 }
 
 :root {
