@@ -1,7 +1,7 @@
 function Nav() {
   return (
     <header
-      className="absolute top-0 left-0 w-full flex justify-between items-center z-10"
+      className="fixed top-0 left-0 w-full flex justify-between items-center z-10 backdrop-blur-md"
       style={{
         height: "clamp(64px, 6.15vw, 157px)",
         paddingLeft: "clamp(1rem, 2.4vw, 3.8rem)",
@@ -25,7 +25,7 @@ function Nav() {
       <a
         href="tel:+13525691017"
         style={{
-          fontFamily: '"Instrument Sans", ui-sans-serif, sans-serif',
+          fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
           fontSize: "clamp(1.125rem, 1.5625vw, 2.5rem)",
           color: "white",
           textDecoration: "underline",

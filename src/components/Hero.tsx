@@ -7,7 +7,7 @@ function Hero() {
       className="relative flex flex-col"
       style={{
         minHeight: "100svh",
-        backgroundImage: `url(${bgImage})`,
+        backgroundImage: `url(${bgImage.src})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -37,7 +37,7 @@ function Hero() {
         <h1
           className="text-center text-white px-4"
           style={{
-            fontFamily: '"Instrument Serif", Georgia, serif',
+            fontFamily: "var(--font-instrument-serif), Georgia, serif",
             fontWeight: 400,
             fontSize: "clamp(2.25rem, 5vw, 8rem)",
             textWrap: "balance",
@@ -58,7 +58,7 @@ function Hero() {
             href="#"
             className="hero-btn-reserve flex items-center justify-center text-white font-semibold transition-colors"
             style={{
-              fontFamily: '"Instrument Sans", ui-sans-serif, sans-serif',
+              fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
               fontWeight: 600,
               fontSize: "clamp(1.125rem, 1.4vw, 2.25rem)",
               borderRadius: "30px",
@@ -75,7 +75,7 @@ function Hero() {
             href="#"
             className="hero-btn-menu flex items-center justify-center text-white transition-colors"
             style={{
-              fontFamily: '"Instrument Sans", ui-sans-serif, sans-serif',
+              fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
               fontWeight: 400,
               fontSize: "clamp(1.125rem, 1.5625vw, 2.5rem)",
               border: "3px solid white",
@@ -97,7 +97,7 @@ function Hero() {
         <p
           className="text-center text-white"
           style={{
-            fontFamily: '"Instrument Sans", ui-sans-serif, sans-serif',
+            fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
             fontWeight: 500,
             fontSize: "clamp(1.25rem, 1.875vw, 3rem)",
           }}
