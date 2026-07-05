@@ -5,12 +5,10 @@
   --font-sans-body: var(--font-instrument-sans), ui-sans-serif, sans-serif;
 }
 
-:root {
-  color: white;
-}
-
-body {
-  color: white;
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(90, 86, 79, 0.55) transparent;
 }
 
 .hero-btn-reserve {

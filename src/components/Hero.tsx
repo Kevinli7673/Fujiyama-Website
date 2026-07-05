@@ -1,27 +1,20 @@
-import bgImage from "../assets/hero-bg.jpg";
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
 import Nav from "./Nav";
 
 function Hero() {
+  // Fade the scroll hint out over the first 300px of scrolling
+  const { scrollY } = useScroll();
+  const scrollHintOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+
   return (
     <section
       className="relative flex flex-col"
       style={{
         minHeight: "100svh",
-        backgroundImage: `url(${bgImage.src})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
-      {/* Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.3) 11.5%, rgba(90,89,89,0.3) 84%)",
-        }}
-        aria-hidden="true"
-      />
-
       {/* Nav */}
       <Nav />
 
@@ -108,19 +101,22 @@ function Hero() {
         {/* Flexible spacer to push scroll strip to the bottom */}
         <div style={{ flex: 1 }} />
 
-        {/* Scroll strip */}
-        <div
-          className="w-full flex flex-col items-center justify-center"
+        {/* Scroll hint — floating text + chevron, clickable, fades out as the user scrolls */}
+        <motion.a
+          href="#story"
+          aria-label="Scroll to Our Story"
+          className="flex flex-col items-center justify-center"
           style={{
-            background: "rgba(217,217,217,0.3)",
-            height: "clamp(90px, 9vw, 230px)",
+            opacity: scrollHintOpacity,
+            paddingBottom: "clamp(1.5rem, 2.5vw, 3.5rem)",
           }}
         >
           <span
             style={{
               fontFamily: "Georgia, serif",
-              fontSize: "clamp(1.125rem, 1.5625vw, 2.5rem)",
+              fontSize: "clamp(1rem, 1.15vw, 1.375rem)",
               color: "white",
+              letterSpacing: "0.08em",
             }}
           >
             Scroll
@@ -130,6 +126,7 @@ function Hero() {
             viewBox="0 0 24 14"
             fill="none"
             aria-hidden="true"
+            className="animate-bounce"
             style={{
               width: "clamp(16px, 1.5vw, 28px)",
               height: "clamp(10px, 1vw, 18px)",
@@ -144,7 +141,7 @@ function Hero() {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </motion.a>
       </div>
     </section>
   );
