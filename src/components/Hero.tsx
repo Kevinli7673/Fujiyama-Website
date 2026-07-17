@@ -21,7 +21,11 @@ const fadeUp = {
   }),
 };
 
-function Hero() {
+type HeroProps = {
+  googleRating: { rating: number; count: number };
+};
+
+function Hero({ googleRating }: HeroProps) {
   // Fade the scroll hint out over the first 300px of scrolling
   const { scrollY } = useScroll();
   const scrollHintOpacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -50,10 +54,16 @@ function Hero() {
           initial="hidden"
           animate="visible"
           custom={0}
-          className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3.5 py-1.5 text-xs font-medium text-ink"
+          className="inline-flex items-center gap-1 rounded-full bg-black/70 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
         >
-          <StarIcon className="h-3.5 w-3.5" />
-          Family Owned · Est. 2016
+          <StarIcon className="h-3.5 w-3.5 text-amber-400" />
+          <span>
+            {googleRating.rating.toFixed(1)}
+            <span className="mx-2 text-white/50">·</span>
+            {googleRating.count}+ Google Reviews
+            <span className="mx-2 text-white/50">·</span>
+            Est. 2016
+          </span>
         </motion.span>
 
         <motion.h1
