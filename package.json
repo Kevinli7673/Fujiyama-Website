@@ -7,18 +7,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "email:dev": "email dev --dir src/emails"
   },
   "dependencies": {
     "framer-motion": "^12.42.2",
     "next": "^16.2.10",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-email": "^6.6.6",
-    "resend": "^6.17.1"
+    "react-email": "^6.6.9",
+    "resend": "^6.17.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@react-email/ui": "^6.6.6",
     "@tailwindcss/postcss": "^4.3.2",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
