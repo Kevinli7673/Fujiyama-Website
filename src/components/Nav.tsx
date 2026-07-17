@@ -1,39 +1,20 @@
+import { PhoneIcon } from "./icons";
+
 function Nav() {
   return (
-    <header
-      className="fixed top-0 left-0 w-full flex justify-between items-center z-10 backdrop-blur-md"
-      style={{
-        height: "clamp(64px, 6.15vw, 157px)",
-        paddingLeft: "clamp(1rem, 2.4vw, 3.8rem)",
-        paddingRight: "clamp(1rem, 2.4vw, 3.8rem)",
-        background:
-          "linear-gradient(to right, rgba(110,149,182,0.2) 0%, rgba(166,166,166,0.2) 52.9%, rgba(127,157,192,0.2) 98.6%)",
-      }}
-    >
-      <nav>
-        <span
-          style={{
-            fontFamily: "Georgia, serif",
-            fontSize: "clamp(1.5rem, 1.875vw, 3rem)",
-            color: "white",
-            fontWeight: 400,
-          }}
-        >
+    <header className="absolute inset-x-0 top-0 z-20 bg-gradient-to-b from-black/50 to-transparent">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-8">
+        <span className="text-xl font-semibold tracking-tight text-white">
           Fujiyama
         </span>
-      </nav>
-      <a
-        href="tel:+13525691017"
-        style={{
-          fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
-          fontSize: "clamp(1.125rem, 1.5625vw, 2.5rem)",
-          color: "white",
-          textDecoration: "underline",
-          fontWeight: 400,
-        }}
-      >
-        (352) 569-1017
-      </a>
+        <a
+          href="tel:+13525691017"
+          className="inline-flex items-center gap-2 rounded-full border border-white/40 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
+        >
+          <PhoneIcon className="h-4 w-4" />
+          (352) 569-1017
+        </a>
+      </div>
     </header>
   );
 }
