@@ -1,108 +1,129 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import sushi from "../assets/sushi.png";
+import hibachi from "../assets/reviews/hibachi-shrimp-rice.jpg";
+import sashimi from "../assets/reviews/sashimi.jpg";
+import specialtyRolls from "../assets/reviews/specialty-rolls.jpg";
+import { FishIcon, FlameIcon, HeartIcon, UsersIcon } from "./icons";
+
+const features = [
+  {
+    icon: FlameIcon,
+    title: "Hibachi Grill",
+    description: "Classic hibachi favorites, cooked fresh off the grill",
+  },
+  {
+    icon: FishIcon,
+    title: "Hand-Rolled Sushi",
+    description: "Fresh ingredients, rolled to order every single day",
+  },
+  {
+    icon: UsersIcon,
+    title: "Family Owned",
+    description: "Opened and run by the same family since 2016",
+  },
+  {
+    icon: HeartIcon,
+    title: "Made with Care",
+    description: "Built on hard work — and you can taste it",
+  },
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const },
+  },
+};
 
 function Story() {
-    const sectionRef = useRef(null);
-
-    // 0 when the section's top enters the viewport bottom → 1 when the section fills the viewport
-    const { scrollYProgress } = useScroll({
-        target: sectionRef,
-        offset: ["start end", "start start"],
-    });
-
-    // Image reveal: fade in + wipe open from the left across the full entry scroll
-    const imageOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-    const imageClip = useTransform(
-        scrollYProgress,
-        [0, 1],
-        ["inset(0 100% 0 0)", "inset(0 0% 0 0)"]
-    );
-
-    return (
-        // Transparent section — the page's fixed background shows through behind the card
-        <section
-            id="story"
-            ref={sectionRef}
-            className="flex items-center justify-center"
-            style={{
-                minHeight: "100svh",
-                padding: "clamp(1rem, 7.8vw, 12.5rem)",
-            }}
+  return (
+    <section id="story" className="bg-white py-24 md:py-32">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 md:px-8 lg:grid-cols-2">
+        {/* Text column */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
         >
-            {/* Step 2: frosted-glass card — translucent bg + blur, NOT opacity */}
-            <div
-                className="flex w-full max-w-[1150px] flex-col items-center gap-10 rounded-3xl bg-[#faf7f2]/70 backdrop-blur-[17.5px] lg:flex-row lg:items-center lg:justify-between lg:gap-0"
-                style={{
-                    padding:
-                        "clamp(1.5rem, 3vw, 4rem) clamp(1.25rem, 2.5vw, 3.5rem)",
-                }}
-            >
-                {/* Step 3: text column — 46% of card on desktop, full width stacked on mobile */}
-                <div
-                    className="flex flex-col lg:w-[46%]"
-                    style={{ gap: "clamp(1.25rem, 1.8vw, 2.5rem)" }}
-                >
-                    <h2
-                        className="text-black"
-                        style={{
-                            fontFamily: "var(--font-instrument-serif), Georgia, serif",
-                            fontWeight: 400,
-                            fontSize: "clamp(2rem, 2.8vw, 4rem)",
-                        }}
-                    >
-                        Our Story
-                    </h2>
-                    <p
-                        className="text-[#5a564f]"
-                        style={{
-                            fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
-                            fontSize: "clamp(1.0625rem, 1.25vw, 1.5rem)",
-                            lineHeight: 1.6,
-                        }}
-                    >
-                        Fujiyama was opened in 2016 by a family who came here with recipes, long hours, and a belief that good food speaks
-                        for itself. Nearly a decade later, it&apos;s still family run and still made the same way: fresh ingredients, hand-rolled
-                        sushi, and hibachi cooked with care. We built this place on hard work, and you can taste it.
-                    </p>
+          <span className="inline-flex rounded-full border border-line px-3.5 py-1.5 text-xs font-medium text-ink">
+            Est. 2016
+          </span>
 
-                    {/* View Menu button — copied from Hero, white → red */}
-                    <a
-                        href="#"
-                        className="flex items-center justify-center self-start text-[#c0272d] transition-colors hover:bg-[#c0272d]/10"
-                        style={{
-                            fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
-                            fontWeight: 400,
-                            fontSize: "clamp(1rem, 1.15vw, 1.375rem)",
-                            border: "3px solid #c0272d",
-                            borderRadius: "40px",
-                            paddingTop: "clamp(0.625rem, 1vw, 1.25rem)",
-                            paddingBottom: "clamp(0.625rem, 1vw, 1.25rem)",
-                            paddingLeft: "clamp(1.5rem, 2.3vw, 3rem)",
-                            paddingRight: "clamp(1.5rem, 2.3vw, 3rem)",
-                        }}
-                    >
-                        View Menu
-                    </a>
-                </div>
+          <h2 className="mt-6 text-balance text-4xl font-semibold tracking-tight text-ink md:text-5xl">
+            A Family Tradition in Bushnell
+          </h2>
 
-                {/* Step 4: image — scroll-linked reveal (fade + left-to-right wipe) */}
-                <motion.div
-                    className="w-full lg:w-[45%]"
-                    style={{ opacity: imageOpacity, clipPath: imageClip }}
-                >
-                    <Image
-                        src={sushi}
-                        alt="Hand-rolled sushi at Fujiyama"
-                        className="h-auto w-full rounded-3xl object-cover"
-                    />
-                </motion.div>
-            </div>
-        </section>
-    )
+          <p className="mt-6 text-pretty leading-relaxed text-body">
+            Fujiyama was opened in 2016 by a family who came here with recipes,
+            long hours, and a belief that good food speaks for itself. Nearly a
+            decade later, it&apos;s still family run and still made the same
+            way.
+          </p>
+
+          <p className="mt-4 text-pretty leading-relaxed text-body">
+            Fresh ingredients, hand-rolled sushi, and hibachi cooked with care.
+            We built this place on hard work, and you can taste it in every
+            dish.
+          </p>
+
+          {/* Feature cards */}
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            {features.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="rounded-xl bg-card p-6">
+                <Icon className="h-6 w-6 text-ink" />
+                <h3 className="mt-4 text-sm font-semibold text-ink">
+                  {title}
+                </h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-body">
+                  {description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Staggered photo collage */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-2 gap-4"
+        >
+          <div className="space-y-4">
+            <Image
+              src={sushi}
+              alt="Hand-rolled sushi at Fujiyama"
+              className="aspect-[3/4] w-full rounded-2xl object-cover"
+            />
+            <Image
+              src={sashimi}
+              alt="Fresh-cut salmon and tuna sashimi"
+              className="aspect-[3/4] w-full rounded-2xl object-cover"
+            />
+          </div>
+          <div className="mt-12 space-y-4">
+            <Image
+              src={hibachi}
+              alt="Hibachi shrimp with fried rice and vegetables"
+              className="aspect-[3/4] w-full rounded-2xl object-cover"
+            />
+            <Image
+              src={specialtyRolls}
+              alt="Specialty sushi rolls drizzled with sauce"
+              className="aspect-[3/4] w-full rounded-2xl object-cover"
+            />
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
 }
 
-export default Story
+export default Story;

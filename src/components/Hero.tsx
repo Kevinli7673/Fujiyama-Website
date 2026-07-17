@@ -1,148 +1,144 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Nav from "./Nav";
+import bgImage from "../assets/hero-bg.jpg";
+import {
+  CalendarIcon,
+  ChevronDownIcon,
+  ClockIcon,
+  MapPinIcon,
+  StarIcon,
+} from "./icons";
 
-function Hero() {
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const, delay },
+  }),
+};
+
+type HeroProps = {
+  googleRating: { rating: number; count: number };
+};
+
+function Hero({ googleRating }: HeroProps) {
   // Fade the scroll hint out over the first 300px of scrolling
   const { scrollY } = useScroll();
   const scrollHintOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   return (
-    <section
-      className="relative flex flex-col"
-      style={{
-        minHeight: "100svh",
-      }}
-    >
-      {/* Nav */}
+    <section className="relative flex min-h-svh flex-col">
+      {/* Background photo + dark overlay */}
+      <div className="absolute inset-0 overflow-hidden">
+        <Image
+          src={bgImage}
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+
       <Nav />
 
-      {/* Main content — flex column, centered, fills remaining space */}
-      <div
-        className="relative z-10 flex flex-col items-center flex-1"
-        style={{ paddingTop: "clamp(64px, 6.15vw, 157px)" }}
-      >
-        {/* Spacer pushing title to ~30% of viewport */}
-        <div style={{ flex: "0 0 clamp(3rem, 11svh, 14rem)" }} />
+      {/* Centered hero content */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-24 pt-28 text-center">
+        <motion.span
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+          className="inline-flex items-center gap-1 rounded-full bg-black/70 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
+        >
+          <StarIcon className="h-3.5 w-3.5 text-amber-400" />
+          <span>
+            {googleRating.rating.toFixed(1)}
+            <span className="mx-2 text-white/50">·</span>
+            {googleRating.count}+ Google Reviews
+            <span className="mx-2 text-white/50">·</span>
+            Est. 2016
+          </span>
+        </motion.span>
 
-        {/* H1 */}
-        <h1
-          className="text-center text-white px-4"
-          style={{
-            fontFamily: "var(--font-instrument-serif), Georgia, serif",
-            fontWeight: 400,
-            fontSize: "clamp(2.25rem, 5vw, 8rem)",
-            textWrap: "balance",
-          }}
+        <motion.h1
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={0.1}
+          className="mt-6 max-w-4xl text-balance text-5xl font-medium tracking-tight text-white md:text-6xl lg:text-7xl"
         >
           Fujiyama Japanese Steakhouse
-        </h1>
+        </motion.h1>
 
-        {/* Spacer between title and buttons (~48% of viewport) */}
-        <div style={{ flex: "0 0 clamp(1.5rem, 6svh, 6rem)" }} />
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={0.2}
+          className="mt-5 max-w-2xl text-pretty text-base text-white/85 md:text-lg"
+        >
+          Hibachi cooked fresh, hand-rolled sushi, and nearly a decade of
+          family tradition in the heart of Bushnell, Florida.
+        </motion.p>
 
-        {/* Button row */}
-        <div
-          className="hero-buttons flex flex-row items-center"
-          style={{ gap: "clamp(1.5rem, 5.4vw, 8.625rem)" }}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={0.3}
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/80"
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <MapPinIcon className="h-4 w-4" />
+            2571 E County Road 48, Bushnell, FL
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <ClockIcon className="h-4 w-4" />
+            Open Tue–Sun
+          </span>
+        </motion.div>
+
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={0.4}
+          className="mt-10 flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row"
         >
           <a
-            href="#"
-            className="hero-btn-reserve flex items-center justify-center text-white font-semibold transition-colors"
-            style={{
-              fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
-              fontWeight: 600,
-              fontSize: "clamp(1.125rem, 1.4vw, 2.25rem)",
-              borderRadius: "30px",
-              paddingTop: "clamp(0.75rem, 2.15vw, 3.44rem)",
-              paddingBottom: "clamp(0.75rem, 2.15vw, 3.44rem)",
-              paddingLeft: "clamp(1.5rem, 3.8vw, 6.09rem)",
-              paddingRight: "clamp(1.5rem, 3.8vw, 6.09rem)",
-            }}
+            href="tel:+13525691017"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-neutral-200 sm:w-auto"
           >
+            <CalendarIcon className="h-4 w-4" />
             Reserve a Table
           </a>
-
           <a
-            href="#"
-            className="hero-btn-menu flex items-center justify-center text-white transition-colors"
-            style={{
-              fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
-              fontWeight: 400,
-              fontSize: "clamp(1.125rem, 1.5625vw, 2.5rem)",
-              border: "3px solid white",
-              borderRadius: "40px",
-              paddingTop: "clamp(0.75rem, 2.15vw, 3.44rem)",
-              paddingBottom: "clamp(0.75rem, 2.15vw, 3.44rem)",
-              paddingLeft: "clamp(1.5rem, 3.8vw, 6.09rem)",
-              paddingRight: "clamp(1.5rem, 3.8vw, 6.09rem)",
-            }}
+            href="#menu"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/60 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto"
           >
             View Menu
           </a>
-        </div>
-
-        {/* Spacer between buttons and subtitle (~67% of viewport) */}
-        <div style={{ flex: "0 0 clamp(1.5rem, 8svh, 8rem)" }} />
-
-        {/* Subtitle */}
-        <p
-          className="text-center text-white"
-          style={{
-            fontFamily: "var(--font-instrument-sans), ui-sans-serif, sans-serif",
-            fontWeight: 500,
-            fontSize: "clamp(1.25rem, 1.875vw, 3rem)",
-          }}
-        >
-          Hibachi · Sushi
-        </p>
-
-        {/* Flexible spacer to push scroll strip to the bottom */}
-        <div style={{ flex: 1 }} />
-
-        {/* Scroll hint — floating text + chevron, clickable, fades out as the user scrolls */}
-        <motion.a
-          href="#story"
-          aria-label="Scroll to Our Story"
-          className="flex flex-col items-center justify-center"
-          style={{
-            opacity: scrollHintOpacity,
-            paddingBottom: "clamp(1.5rem, 2.5vw, 3.5rem)",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "Georgia, serif",
-              fontSize: "clamp(1rem, 1.15vw, 1.375rem)",
-              color: "white",
-              letterSpacing: "0.08em",
-            }}
-          >
-            Scroll
-          </span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 14"
-            fill="none"
-            aria-hidden="true"
-            className="animate-bounce"
-            style={{
-              width: "clamp(16px, 1.5vw, 28px)",
-              height: "clamp(10px, 1vw, 18px)",
-              marginTop: "clamp(0.25rem, 0.4vw, 0.5rem)",
-            }}
-          >
-            <path
-              d="M2 2L12 12L22 2"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </motion.a>
+        </motion.div>
       </div>
+
+      {/* Scroll hint — fades out as the user scrolls */}
+      <motion.a
+        href="#story"
+        aria-label="Scroll to Our Story"
+        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-white/80"
+        style={{ opacity: scrollHintOpacity }}
+      >
+        <span className="text-xs font-medium uppercase tracking-[0.2em]">
+          Scroll
+        </span>
+        <ChevronDownIcon className="h-4 w-4 animate-bounce" />
+      </motion.a>
     </section>
   );
 }

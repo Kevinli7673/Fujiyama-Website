@@ -1,19 +1,18 @@
-"use client";
 import Hero from "../components/Hero";
 import Story from "../components/Story";
-import ScrollOverlay from "../components/ScrollOverlay";
-import bgImage from "../assets/hero-bg.jpg";
+import Menu from "../components/Menu";
+import Contact from "../components/Contact";
+import { getGoogleRating } from "../lib/rating";
 
-export default function Home() {
+export default async function Home() {
+  const googleRating = await getGoogleRating();
+
   return (
     <main>
-      <button onClick={async () => {
-        await fetch("/api/emails", {method: "POST"})
-        }
-      }>
-        Send Email
-      </button>
-      
+      <Hero googleRating={googleRating} />
+      <Story />
+      <Menu />
+      <Contact />
     </main>
   );
 }
