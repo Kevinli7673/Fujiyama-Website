@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   CalendarIcon,
@@ -117,13 +118,13 @@ function Contact() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-4">
-              <a
-                href="tel:+13525691017"
+              <Link
+                href="/reserve"
                 className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-700"
               >
                 <CalendarIcon className="h-4 w-4" />
                 Reserve a Table
-              </a>
+              </Link>
               <a
                 href={MAPS_URL}
                 target="_blank"
