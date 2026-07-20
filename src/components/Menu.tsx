@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import lunch from "../assets/reviews/hibachi-steak-shrimp.jpg";
 import dinner from "../assets/reviews/sushi-sashimi-combo.jpg";
 import { ClockIcon } from "./icons";
+import { FanArt, SeigaihaArt, SideDecor } from "./decor";
 
 const highlights = [
   {
@@ -38,8 +39,14 @@ const fadeUp = {
 
 function Menu() {
   return (
-    <section id="menu" className="bg-card py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6 md:px-8">
+    <section id="menu" className="relative overflow-hidden bg-card py-24 md:py-32">
+      <SideDecor side="left" className="-left-14 bottom-16 w-48 md:w-64">
+        <SeigaihaArt className="w-full" />
+      </SideDecor>
+      <SideDecor side="right" className="-right-10 top-20 w-36 md:w-48">
+        <FanArt className="w-full" />
+      </SideDecor>
+      <div className="relative mx-auto max-w-6xl px-6 md:px-8">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -67,7 +74,7 @@ function Menu() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
-              className="overflow-hidden rounded-2xl bg-white"
+              className="overflow-hidden rounded-2xl bg-paper"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image

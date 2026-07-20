@@ -4,11 +4,16 @@
   /* Single clean sans across the whole site */
   --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
 
-  /* Neutral editorial palette */
-  --color-ink: #171717; /* headings, solid buttons */
-  --color-body: #6f6f6f; /* paragraph gray */
-  --color-card: #f5f5f4; /* soft feature-card gray */
-  --color-line: #e7e5e4; /* hairline borders */
+  /* Warm editorial palette — rice paper & cream, not office white */
+  --color-ink: #1c1917; /* headings, solid buttons (warm black) */
+  --color-body: #6b6259; /* paragraph gray, warm */
+  --color-paper: #f8f2e7; /* page background — warm sand */
+  --color-card: #efe6d7; /* soft feature-card cream */
+  --color-line: #e3d9c8; /* hairline borders */
+}
+
+body {
+  background: var(--color-paper);
 }
 
 html {

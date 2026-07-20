@@ -54,14 +54,14 @@ function Hero({ googleRating }: HeroProps) {
           initial="hidden"
           animate="visible"
           custom={0}
-          className="inline-flex items-center gap-1 rounded-full bg-black/70 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
+          className="inline-flex items-center gap-1 rounded-full bg-black/70 px-4 py-1.5 text-xs font-medium text-paper backdrop-blur-sm"
         >
           <StarIcon className="h-3.5 w-3.5 text-amber-400" />
           <span>
             {googleRating.rating.toFixed(1)}
-            <span className="mx-2 text-white/50">·</span>
+            <span className="mx-2 text-paper/50">·</span>
             {googleRating.count}+ Google Reviews
-            <span className="mx-2 text-white/50">·</span>
+            <span className="mx-2 text-paper/50">·</span>
             Est. 2016
           </span>
         </motion.span>
@@ -71,7 +71,7 @@ function Hero({ googleRating }: HeroProps) {
           initial="hidden"
           animate="visible"
           custom={0.1}
-          className="mt-6 max-w-4xl text-balance text-5xl font-medium tracking-tight text-white md:text-6xl lg:text-7xl"
+          className="mt-6 max-w-4xl text-balance text-5xl font-medium tracking-tight text-paper md:text-6xl lg:text-7xl"
         >
           Fujiyama Japanese Steakhouse
         </motion.h1>
@@ -81,7 +81,7 @@ function Hero({ googleRating }: HeroProps) {
           initial="hidden"
           animate="visible"
           custom={0.2}
-          className="mt-5 max-w-2xl text-pretty text-base text-white/85 md:text-lg"
+          className="mt-5 max-w-2xl text-pretty text-base text-paper/85 md:text-lg"
         >
           Hibachi cooked fresh, hand-rolled sushi, and nearly a decade of
           family tradition in the heart of Bushnell, Florida.
@@ -92,7 +92,7 @@ function Hero({ googleRating }: HeroProps) {
           initial="hidden"
           animate="visible"
           custom={0.3}
-          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/80"
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-paper/80"
         >
           <span className="inline-flex items-center gap-1.5">
             <MapPinIcon className="h-4 w-4" />
@@ -113,14 +113,14 @@ function Hero({ googleRating }: HeroProps) {
         >
           <a
             href="tel:+13525691017"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-neutral-200 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-card sm:w-auto"
           >
             <CalendarIcon className="h-4 w-4" />
             Reserve a Table
           </a>
           <a
             href="#menu"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/60 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-paper/60 px-7 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-paper/10 sm:w-auto"
           >
             View Menu
           </a>
@@ -131,7 +131,7 @@ function Hero({ googleRating }: HeroProps) {
       <motion.a
         href="#story"
         aria-label="Scroll to Our Story"
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-white/80"
+        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-paper/80"
         style={{ opacity: scrollHintOpacity }}
       >
         <span className="text-xs font-medium uppercase tracking-[0.2em]">

@@ -8,6 +8,7 @@ import {
   NavigationIcon,
   PhoneIcon,
 } from "./icons";
+import { FujiArt, LanternArt, SideDecor } from "./decor";
 
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Fujiyama+Japanese+Steakhouse+2571+E+County+Road+48+Bushnell+FL+33513";
@@ -33,7 +34,7 @@ function InfoCard({
   className?: string;
 }) {
   return (
-    <div className={`rounded-xl border border-line bg-white p-6 ${className}`}>
+    <div className={`rounded-xl border border-line bg-paper p-6 ${className}`}>
       <div className="flex items-center gap-3">
         <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-card text-ink">
           {icon}
@@ -47,8 +48,14 @@ function InfoCard({
 
 function Contact() {
   return (
-    <section id="contact" className="border-t border-line bg-white py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6 md:px-8">
+    <section id="contact" className="relative overflow-hidden border-t border-line bg-paper py-24 md:py-32">
+      <SideDecor side="right" className="-right-12 bottom-10 w-52 md:w-72">
+        <FujiArt className="w-full" />
+      </SideDecor>
+      <SideDecor side="left" className="-left-6 top-24 w-24 md:w-32">
+        <LanternArt className="w-full" />
+      </SideDecor>
+      <div className="relative mx-auto max-w-6xl px-6 md:px-8">
         {/* Centered header */}
         <motion.div
           variants={fadeUp}
@@ -139,7 +146,7 @@ function Contact() {
           {/* Map card */}
           <div className="flex flex-col rounded-2xl border border-line bg-card p-6">
             <div className="flex flex-1 flex-col items-center justify-center py-12 text-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-line bg-white text-ink">
+              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-line bg-paper text-ink">
                 <MapPinIcon className="h-7 w-7" />
               </span>
               <h3 className="mt-6 text-lg font-semibold text-ink">
@@ -158,7 +165,7 @@ function Contact() {
                 Open in Maps
               </a>
             </div>
-            <div className="flex items-start gap-2.5 rounded-xl bg-white p-4">
+            <div className="flex items-start gap-2.5 rounded-xl bg-paper p-4">
               <MapPinIcon className="mt-0.5 h-4 w-4 shrink-0 text-ink" />
               <div className="text-sm">
                 <p className="font-semibold text-ink">

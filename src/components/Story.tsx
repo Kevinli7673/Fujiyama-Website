@@ -7,6 +7,7 @@ import hibachi from "../assets/reviews/hibachi-shrimp-rice.jpg";
 import sashimi from "../assets/reviews/sashimi.jpg";
 import specialtyRolls from "../assets/reviews/specialty-rolls.jpg";
 import { FishIcon, FlameIcon, HeartIcon, UsersIcon } from "./icons";
+import { BambooArt, SakuraArt, SideDecor } from "./decor";
 
 const features = [
   {
@@ -42,8 +43,14 @@ const fadeUp = {
 
 function Story() {
   return (
-    <section id="story" className="bg-white py-24 md:py-32">
-      <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 md:px-8 lg:grid-cols-2">
+    <section id="story" className="relative overflow-hidden bg-paper py-24 md:py-32">
+      <SideDecor side="right" className="-right-10 top-14 w-40 md:w-56">
+        <SakuraArt className="w-full" />
+      </SideDecor>
+      <SideDecor side="left" className="-left-8 bottom-12 w-24 md:w-32">
+        <BambooArt className="w-full" />
+      </SideDecor>
+      <div className="relative mx-auto grid max-w-6xl items-center gap-16 px-6 md:px-8 lg:grid-cols-2">
         {/* Text column */}
         <motion.div
           variants={fadeUp}
