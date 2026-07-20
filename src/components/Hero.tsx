@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Nav from "./Nav";
 import bgImage from "../assets/hero-bg.jpg";
@@ -111,13 +112,13 @@ function Hero({ googleRating }: HeroProps) {
           custom={0.4}
           className="mt-10 flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row"
         >
-          <a
-            href="tel:+13525691017"
+          <Link
+            href="/reserve"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-card sm:w-auto"
           >
             <CalendarIcon className="h-4 w-4" />
             Reserve a Table
-          </a>
+          </Link>
           <a
             href="#menu"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-paper/60 px-7 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-paper/10 sm:w-auto"
