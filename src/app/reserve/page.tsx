@@ -52,7 +52,7 @@ export default function ReservePage() {
   const [selection, setSelection] = React.useState<{
     date?: Date;
     time?: string;
-  }>({ date: new Date() });
+  }>({});
   const [confirmed, setConfirmed] = React.useState<{
     date?: Date;
     time?: string;

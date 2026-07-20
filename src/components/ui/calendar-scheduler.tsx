@@ -42,7 +42,7 @@ function CalendarScheduler({
   summary,
   children,
 }: CalendarSchedulerProps) {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [date, setDate] = React.useState<Date | undefined>();
   const [time, setTime] = React.useState<string | undefined>();
 
   const update = (next: { date?: Date; time?: string }) => {
@@ -68,7 +68,7 @@ function CalendarScheduler({
               mode="single"
               selected={date}
               onSelect={(d) => update({ date: d })}
-              disabled={{ before: new Date() }}
+              disabled={[{ before: new Date() }, { dayOfWeek: [1] }]}
               className="rounded-md"
             />
           </div>
