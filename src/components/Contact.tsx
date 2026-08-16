@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -10,6 +11,7 @@ import {
   PhoneIcon,
 } from "./icons";
 import { FujiArt, LanternArt, SideDecor } from "./decor";
+import SpotlightCard from "./SpotlightCard";
 
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Fujiyama+Japanese+Steakhouse+2571+E+County+Road+48+Bushnell+FL+33513";
@@ -35,7 +37,10 @@ function InfoCard({
   className?: string;
 }) {
   return (
-    <div className={`rounded-xl border border-line bg-paper p-6 ${className}`}>
+    <SpotlightCard
+      className={`rounded-xl border border-line bg-paper p-6 ${className}`}
+      spotlightColor="rgba(198, 149, 74, 0.18)"
+    >
       <div className="flex items-center gap-3">
         <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-card text-ink">
           {icon}
@@ -43,7 +48,7 @@ function InfoCard({
         <h3 className="text-sm font-semibold text-ink">{title}</h3>
       </div>
       <div className="mt-4 text-sm leading-relaxed text-body">{children}</div>
-    </div>
+    </SpotlightCard>
   );
 }
 
@@ -132,41 +137,34 @@ function Contact() {
                 <CalendarIcon className="h-4 w-4" />
                 Reserve a Table
               </Link>
-              <a
-                href={MAPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-card"
-              >
-                <NavigationIcon className="h-4 w-4" />
-                Get Directions
-              </a>
             </div>
           </div>
 
           {/* Map card */}
-          <div className="flex flex-col rounded-2xl border border-line bg-card p-6">
-            <div className="flex flex-1 flex-col items-center justify-center py-12 text-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-line bg-paper text-ink">
-                <MapPinIcon className="h-7 w-7" />
-              </span>
-              <h3 className="mt-6 text-lg font-semibold text-ink">
-                Find Us in Bushnell
-              </h3>
-              <p className="mt-2 text-sm text-body">
-                Tap to view our location on Google Maps
-              </p>
+          <div className="flex flex-col overflow-hidden rounded-2xl border border-line bg-card p-6">
+            <div className="relative aspect-[865/622] w-full overflow-hidden rounded-xl">
+              <Image
+                src="/map-bushnell.png"
+                alt="Map showing Fujiyama Japanese Steakhouse location in Bushnell, FL"
+                fill
+                className="object-contain"
+              />
               <a
                 href={MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-neutral-700"
+                className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-neutral-700"
               >
                 <NavigationIcon className="h-4 w-4" />
                 Open in Maps
               </a>
             </div>
-            <div className="flex items-start gap-2.5 rounded-xl bg-paper p-4">
+            <div className="mt-6 text-center">
+              <h3 className="text-lg font-semibold text-ink">
+                Find Us in Bushnell
+              </h3>
+            </div>
+            <div className="mt-6 flex items-start gap-2.5 rounded-xl bg-paper p-4">
               <MapPinIcon className="mt-0.5 h-4 w-4 shrink-0 text-ink" />
               <div className="text-sm">
                 <p className="font-semibold text-ink">

@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Nav from "./Nav";
+import CountUp from "./CountUp";
+import Magnet from "./Magnet";
 import bgImage from "../assets/hero-bg.jpg";
 import {
   CalendarIcon,
@@ -61,7 +63,7 @@ function Hero({ googleRating }: HeroProps) {
           <span>
             {googleRating.rating.toFixed(1)}
             <span className="mx-2 text-paper/50">·</span>
-            {googleRating.count}+ Google Reviews
+            <CountUp to={googleRating.count} duration={1.4} />+ Google Reviews
             <span className="mx-2 text-paper/50">·</span>
             Est. 2016
           </span>
@@ -112,19 +114,21 @@ function Hero({ googleRating }: HeroProps) {
           custom={0.4}
           className="mt-10 flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row"
         >
+          <Magnet padding={40} magnetStrength={4} wrapperClassName="w-full sm:w-auto">
+            <Link
+              href="/reserve"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-card sm:w-auto"
+            >
+              <CalendarIcon className="h-4 w-4" />
+              Reserve a Table
+            </Link>
+          </Magnet>
           <Link
-            href="/reserve"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-card sm:w-auto"
-          >
-            <CalendarIcon className="h-4 w-4" />
-            Reserve a Table
-          </Link>
-          <a
-            href="#menu"
+            href="/menu"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-paper/60 px-7 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-paper/10 sm:w-auto"
           >
             View Menu
-          </a>
+          </Link>
         </motion.div>
       </div>
 

@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import Story from "../components/Story";
 import Menu from "../components/Menu";
 import Contact from "../components/Contact";
+import StickyActions from "../components/StickyActions";
 import { getGoogleRating } from "../lib/rating";
 
 export default async function Home() {
@@ -9,6 +10,7 @@ export default async function Home() {
 
   return (
     <main>
+      <StickyActions />
       <Hero googleRating={googleRating} />
       <Story />
       <Menu />

@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import lunch from "../assets/reviews/hibachi-steak-shrimp.jpg";
 import dinner from "../assets/reviews/sushi-sashimi-combo.jpg";
 import { ClockIcon } from "./icons";
 import { FanArt, SeigaihaArt, SideDecor } from "./decor";
+import TiltedCard from "./TiltedCard";
 
 const highlights = [
   {
@@ -77,12 +78,19 @@ function Menu() {
               className="overflow-hidden rounded-2xl bg-paper"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={image}
-                  alt={alt}
-                  fill
-                  className="object-cover transition-transform duration-500 hover:scale-105"
-                  sizes="(min-width: 768px) 50vw, 100vw"
+                <TiltedCard
+                  imageSrc={image.src}
+                  altText={alt}
+                  captionText={title}
+                  containerHeight="100%"
+                  containerWidth="100%"
+                  imageHeight="100%"
+                  imageWidth="100%"
+                  rotateAmplitude={8}
+                  scaleOnHover={1.04}
+                  showMobileWarning={false}
+                  showTooltip={false}
+                  borderRadius="0px"
                 />
                 <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3.5 py-1.5 text-xs font-medium text-ink">
                   {label}
@@ -104,6 +112,15 @@ function Menu() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/menu"
+            className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-700"
+          >
+            View Full Menu
+          </Link>
         </div>
       </div>
     </section>
