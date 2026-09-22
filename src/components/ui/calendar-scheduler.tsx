@@ -18,6 +18,7 @@ export interface CalendarSchedulerProps {
   onConfirm?: (value: { date?: Date; time?: string }) => void;
   onChange?: (value: { date?: Date; time?: string }) => void;
   confirmDisabled?: boolean;
+  confirmLabel?: string;
   summary?: string;
   children?: React.ReactNode;
 }
@@ -39,16 +40,21 @@ function CalendarScheduler({
   onConfirm,
   onChange,
   confirmDisabled = false,
+  confirmLabel = "Confirm",
   summary,
   children,
 }: CalendarSchedulerProps) {
   const [date, setDate] = React.useState<Date | undefined>();
   const [time, setTime] = React.useState<string | undefined>();
 
+  // Guard against a stale selected time that's no longer offered
+  // (e.g. the date changed and that slot is now in the past).
+  const effectiveTime = time && timeSlots.includes(time) ? time : undefined;
+
   const update = (next: { date?: Date; time?: string }) => {
     if ("date" in next) setDate(next.date);
     if ("time" in next) setTime(next.time);
-    onChange?.({ date, time, ...next });
+    onChange?.({ date, time: effectiveTime, ...next });
   };
 
   return (
@@ -82,14 +88,14 @@ function CalendarScheduler({
               {timeSlots.map((slot) => (
                 <Button
                   key={slot}
-                  variant={time === slot ? "default" : "outline"}
+                  variant={effectiveTime === slot ? "default" : "outline"}
                   size="sm"
                   className={cn(
                     "w-full transition-[transform,color,background-color] active:scale-95",
-                    time === slot && "ring-2 ring-primary",
+                    effectiveTime === slot && "ring-2 ring-primary",
                   )}
                   onClick={() =>
-                    update({ time: time === slot ? undefined : slot })
+                    update({ time: effectiveTime === slot ? undefined : slot })
                   }
                 >
                   {slot}
@@ -114,10 +120,10 @@ function CalendarScheduler({
           )}
           <Button
             size="sm"
-            onClick={() => onConfirm?.({ date, time })}
-            disabled={!date || !time || confirmDisabled}
+            onClick={() => onConfirm?.({ date, time: effectiveTime })}
+            disabled={!date || !effectiveTime || confirmDisabled}
           >
-            Confirm
+            {confirmLabel}
           </Button>
         </CardFooter>
       </Card>

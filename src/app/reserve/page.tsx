@@ -24,10 +24,22 @@ function makeSlots(start: number, end: number) {
   return slots;
 }
 
-const TIME_SLOTS = [
-  ...makeSlots(11 * 60, 13 * 60 + 30), // lunch: 11:00 AM – 1:30 PM
-  ...makeSlots(17 * 60, 20 * 60 + 30), // dinner: 5:00 PM – 8:30 PM
-];
+const TIME_SLOTS = makeSlots(11 * 60, 21 * 60); // 11:00 AM – 9:00 PM, continuous
+
+const MIN_LEAD_TIME_MS = 30 * 60 * 1000;
+
+/** Combine a calendar date with a "HH:MM AM/PM" slot into a concrete Date. */
+function slotToDate(date: Date, slot: string) {
+  const match = slot.match(/(\d{2}):(\d{2}) (AM|PM)/);
+  if (!match) return date;
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  if (match[3] === "PM" && hours !== 12) hours += 12;
+  if (match[3] === "AM" && hours === 12) hours = 0;
+  const result = new Date(date);
+  result.setHours(hours, minutes, 0, 0);
+  return result;
+}
 
 const PARTY_SIZES = ["1", "2", "3", "4", "5", "6", "7", "8+"];
 
@@ -57,8 +69,57 @@ export default function ReservePage() {
     date?: Date;
     time?: string;
   } | null>(null);
+  const [sending, setSending] = React.useState(false);
+  const [sendError, setSendError] = React.useState<string | null>(null);
 
   const contactMissing = email.trim() === "" || phone.trim() === "";
+
+  const availableTimeSlots = React.useMemo(() => {
+    const now = new Date();
+    // Before a date is picked, assume "today" so we don't show already-past
+    // slots that would just get filtered out once the user selects today anyway.
+    const referenceDate = selection.date ?? now;
+    if (referenceDate.toDateString() !== now.toDateString()) return TIME_SLOTS;
+    const cutoff = new Date(now.getTime() + MIN_LEAD_TIME_MS);
+    return TIME_SLOTS.filter((slot) => slotToDate(referenceDate, slot) >= cutoff);
+  }, [selection.date]);
+
+  async function handleConfirm(val: { date?: Date; time?: string }) {
+    if (!val.date || !val.time) return;
+
+    setSending(true);
+    setSendError(null);
+
+    try {
+      const res = await fetch("/api/emails", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          date: val.date.toISOString(),
+          time: val.time,
+          partySize,
+          email,
+          phone,
+          notes,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error ?? "Request failed");
+      }
+
+      setConfirmed(val);
+    } catch (err) {
+      setSendError(
+        err instanceof Error && err.message !== "Request failed"
+          ? err.message
+          : "Something went wrong sending your request. Please try again or call us.",
+      );
+    } finally {
+      setSending(false);
+    }
+  }
 
   const summary =
     selection.date && selection.time
@@ -204,11 +265,12 @@ export default function ReservePage() {
                 >
                   <CalendarScheduler
                     title=""
-                    timeSlots={TIME_SLOTS}
-                    confirmDisabled={contactMissing}
+                    timeSlots={availableTimeSlots}
+                    confirmDisabled={contactMissing || sending}
+                    confirmLabel={sending ? "Sending…" : "Confirm"}
                     summary={summary}
                     onChange={setSelection}
-                    onConfirm={(val) => setConfirmed(val)}
+                    onConfirm={handleConfirm}
                   >
                     <div className="grid gap-3 p-4 pt-0">
                       {/* Party size */}
@@ -271,6 +333,9 @@ export default function ReservePage() {
                         <p className="text-xs text-muted-foreground">
                           Enter your email and phone number to confirm.
                         </p>
+                      )}
+                      {sendError && (
+                        <p className="text-xs text-red-600">{sendError}</p>
                       )}
                     </div>
                   </CalendarScheduler>
