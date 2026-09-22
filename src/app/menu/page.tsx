@@ -733,7 +733,7 @@ export default function MenuPage() {
   const categoryMap = Object.fromEntries(categories.map((c) => [c.id, c]));
 
   return (
-    <main className="overflow-x-hidden">
+    <main>
       {/* ---- Header ---- */}
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-8">
@@ -802,7 +802,7 @@ export default function MenuPage() {
 
       {/* ---- Menu body ---- */}
       <section className="bg-paper pb-16 pt-10 md:pb-24 md:pt-14">
-        <div className="mx-auto grid max-w-[100rem] gap-16 px-6 md:px-8 xl:grid-cols-[16rem_minmax(0,1fr)_16rem]">
+        <div className="mx-auto max-w-[100rem] px-6 md:px-8 xl:grid xl:grid-cols-[16rem_minmax(0,1fr)_16rem] xl:gap-16">
           {/* Left sidebar — desktop only */}
           <aside className="hidden xl:block">
             <div className="sticky top-28">
