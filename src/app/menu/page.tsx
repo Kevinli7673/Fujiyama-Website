@@ -598,7 +598,7 @@ function FeaturedCard({ category }: { category: MenuCategory }) {
         spotlightColor="rgba(177, 53, 39, 0.08)"
       >
         {img && (
-          <div className="relative aspect-[3/1] w-full overflow-hidden">
+          <div className="relative aspect-[2/1] w-full overflow-hidden md:aspect-[3/1]">
             <Image
               src={img.src}
               alt={img.alt}

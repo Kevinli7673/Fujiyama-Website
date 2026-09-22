@@ -28,6 +28,18 @@ next-env.d.ts
 *.sln
 *.sw?
 
-# Claude Code local settings
+# Claude Code
 .claude/settings.local.json
+.claude/skills/impeccable/
+.claude/agents/impeccable-*
+
+# Codex / Agents
+.agents/
+.codex/
+
+# Impeccable
+.impeccable/
+skills-lock.json
 *.tsbuildinfo
+.vercel
+.env*
