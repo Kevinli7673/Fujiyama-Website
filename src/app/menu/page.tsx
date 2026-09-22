@@ -9,7 +9,6 @@ import { FujiArt, LanternArt, SideDecor, SeigaihaArt } from "@/components/decor"
 import LineSidebar from "@/components/LineSidebar";
 import SpotlightCard from "@/components/SpotlightCard";
 
-import heroImg from "@/assets/hero-bg.jpg";
 import signatureImg from "@/assets/reviews/specialty-rolls.jpg";
 import hibachiImg from "@/assets/reviews/hibachi-steak-shrimp.jpg";
 
@@ -776,31 +775,20 @@ export default function MenuPage() {
         </div>
       </header>
 
-      {/* ---- Hero — dark photo background ---- */}
-      <section className="relative overflow-hidden bg-ink py-20 md:py-28">
-        <div className="absolute inset-0">
-          <Image
-            src={heroImg}
-            alt=""
-            fill
-            priority
-            className="object-cover object-[70%_center] opacity-50"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/40 to-ink/80" />
-        </div>
+      {/* ---- Hero ---- */}
+      <section className="relative overflow-hidden bg-accent pb-10 pt-20 md:pb-14 md:pt-28">
         <SideDecor side="right" className="-right-10 top-16 w-40 md:w-56">
-          <FujiArt className="w-full text-paper/10" />
+          <FujiArt className="w-full" />
         </SideDecor>
         <SideDecor side="left" className="-left-8 top-16 w-24 md:w-32">
-          <LanternArt className="w-full text-paper/10" />
+          <LanternArt className="w-full" />
         </SideDecor>
         <div className="relative mx-auto max-w-2xl px-6 text-center md:px-8">
           <motion.span
             variants={fadeUp(0)}
             initial="hidden"
             animate="visible"
-            className="inline-flex rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium text-paper backdrop-blur-sm"
+            className="inline-flex rounded-full border border-line px-3.5 py-1.5 text-xs font-medium text-ink"
           >
             Hibachi &amp; Sushi
           </motion.span>
@@ -808,7 +796,7 @@ export default function MenuPage() {
             variants={fadeUp(0.1)}
             initial="hidden"
             animate="visible"
-            className="mt-6 text-balance text-5xl font-medium tracking-tight text-paper md:text-6xl"
+            className="mt-6 text-balance text-5xl font-medium tracking-tight text-ink md:text-6xl"
           >
             Our Menu
           </motion.h1>
@@ -816,7 +804,7 @@ export default function MenuPage() {
             variants={fadeUp(0.2)}
             initial="hidden"
             animate="visible"
-            className="mt-5 text-pretty text-lg text-paper/80"
+            className="mt-5 text-pretty text-lg text-body"
           >
             Hibachi grilled to order, sushi rolled fresh, and everything made
             the same way we&apos;ve made it since 2016.
