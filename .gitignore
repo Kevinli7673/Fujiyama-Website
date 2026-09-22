@@ -40,6 +40,9 @@ next-env.d.ts
 # Impeccable
 .impeccable/
 skills-lock.json
+
+# Claude SEO
+claude-seo/
 *.tsbuildinfo
 .vercel
 .env*
