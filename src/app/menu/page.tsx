@@ -497,8 +497,8 @@ function ItemRow({ item }: { item: MenuItem }) {
   return (
     <div className="mb-4">
       <div className="flex items-baseline gap-2">
-        <p className="font-medium text-ink">{item.name}</p>
-        <span className="min-w-4 flex-1 translate-y-[-3px] border-b border-dotted border-line/50" />
+        <p className="min-w-0 font-medium text-ink">{item.name}</p>
+        <span className="min-w-2 flex-1 translate-y-[-3px] border-b border-dotted border-line/50" />
         <p className="shrink-0 whitespace-nowrap font-semibold text-primary">
           {item.price}
         </p>
@@ -545,7 +545,7 @@ function StandardCard({ category }: { category: MenuCategory }) {
   return (
     <div
       id={category.id}
-      className="scroll-mt-28 overflow-hidden rounded-2xl border border-line bg-white p-5 sm:p-7 md:p-10"
+      className="scroll-mt-28 rounded-2xl border border-line bg-white p-5 sm:p-7 md:p-10"
     >
       <div className="flex items-center gap-3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -629,8 +629,8 @@ function DrinkItemRow({ item }: { item: MenuItem }) {
   return (
     <div className="mb-3">
       <div className="flex items-baseline gap-2">
-        <p className="font-medium text-paper/90">{item.name}</p>
-        <span className="min-w-3 flex-1 translate-y-[-3px] border-b border-dotted border-paper/20" />
+        <p className="min-w-0 font-medium text-paper/90">{item.name}</p>
+        <span className="min-w-2 flex-1 translate-y-[-3px] border-b border-dotted border-paper/20" />
         <p className="shrink-0 whitespace-nowrap font-semibold text-paper">
           {item.price}
         </p>
@@ -645,7 +645,7 @@ function DrinkItemRow({ item }: { item: MenuItem }) {
 function DrinksSection() {
   return (
     <section
-      className="scroll-mt-28 overflow-hidden rounded-2xl bg-[#3a332d] px-5 py-8 sm:px-7 sm:py-10 md:px-10 md:py-12"
+      className="scroll-mt-28 rounded-2xl bg-[#3a332d] px-5 py-8 sm:px-7 sm:py-10 md:px-10 md:py-12"
     >
       <div className="mb-10 text-center">
         <h2 className="text-3xl font-medium tracking-tight text-paper md:text-4xl">
