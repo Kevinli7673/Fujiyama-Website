@@ -570,7 +570,7 @@ function StandardCard({ category }: { category: MenuCategory }) {
         </div>
       </div>
 
-      <div className="mt-7 columns-1 gap-x-12 sm:columns-2">
+      <div className="mt-7 gap-x-12 sm:columns-2">
         {renderEntries(category.items)}
       </div>
 
@@ -620,7 +620,7 @@ function FeaturedCard({ category }: { category: MenuCategory }) {
             )}
           </div>
 
-          <div className="mt-7 columns-1 gap-x-12 sm:columns-2">
+          <div className="mt-7 gap-x-12 sm:columns-2">
             {renderEntries(category.items)}
           </div>
 
