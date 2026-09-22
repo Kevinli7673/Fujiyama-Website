@@ -8,7 +8,6 @@ import CountUp from "./CountUp";
 import Magnet from "./Magnet";
 import bgImage from "../assets/hero-bg.jpg";
 import {
-  CalendarIcon,
   ChevronDownIcon,
   ClockIcon,
   MapPinIcon,
@@ -116,19 +115,12 @@ function Hero({ googleRating }: HeroProps) {
         >
           <Magnet padding={40} magnetStrength={4} wrapperClassName="w-full sm:w-auto">
             <Link
-              href="/reserve"
+              href="/menu"
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-card sm:w-auto"
             >
-              <CalendarIcon className="h-4 w-4" />
-              Reserve a Table
+              View Menu
             </Link>
           </Magnet>
-          <Link
-            href="/menu"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-paper/60 px-7 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-paper/10 sm:w-auto"
-          >
-            View Menu
-          </Link>
         </motion.div>
       </div>
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
-import { CalendarIcon, MenuListIcon } from "./icons";
+import { MenuListIcon } from "./icons";
 
 function StickyActions() {
   const [visible, setVisible] = useState(false);
@@ -29,13 +29,6 @@ function StickyActions() {
           >
             <MenuListIcon className="h-4 w-4" />
             Menu
-          </Link>
-          <Link
-            href="/reserve"
-            className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-neutral-700"
-          >
-            <CalendarIcon className="h-4 w-4" />
-            Reserve
           </Link>
         </motion.div>
       )}

@@ -1,10 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  CalendarIcon,
   ClockIcon,
   MapPinIcon,
   NavigationIcon,
@@ -129,15 +127,6 @@ function Contact() {
               </InfoCard>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-4">
-              <Link
-                href="/reserve"
-                className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-700"
-              >
-                <CalendarIcon className="h-4 w-4" />
-                Reserve a Table
-              </Link>
-            </div>
           </div>
 
           {/* Map card */}

@@ -1,18 +1,34 @@
 "use client";
 
+import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { PhoneIcon } from "@/components/icons";
-import { FujiArt, LanternArt, SideDecor } from "@/components/decor";
+import { PhoneIcon, ClockIcon } from "@/components/icons";
+import { FujiArt, LanternArt, SideDecor, SeigaihaArt } from "@/components/decor";
+import LineSidebar from "@/components/LineSidebar";
+import SpotlightCard from "@/components/SpotlightCard";
 
-const fadeUp = {
+import heroImg from "@/assets/hero-bg.jpg";
+import signatureImg from "@/assets/reviews/specialty-rolls.jpg";
+import hibachiImg from "@/assets/reviews/hibachi-steak-shrimp.jpg";
+
+/* ------------------------------------------------------------------ */
+/*  Animation variants                                                 */
+/* ------------------------------------------------------------------ */
+
+const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" as const },
+    transition: { duration: 0.6, ease: "easeOut" as const, delay },
   },
-};
+});
+
+/* ------------------------------------------------------------------ */
+/*  Types                                                              */
+/* ------------------------------------------------------------------ */
 
 type MenuItem = {
   name: string;
@@ -30,6 +46,10 @@ type MenuCategory = {
   icon: string;
   items: MenuEntry[];
 };
+
+/* ------------------------------------------------------------------ */
+/*  Data                                                               */
+/* ------------------------------------------------------------------ */
 
 const categories: MenuCategory[] = [
   {
@@ -312,7 +332,7 @@ const categories: MenuCategory[] = [
   {
     id: "hibachi-dinner",
     title: "Hibachi Dinner",
-    subtitle: "Served w. soup or house salad, rice or noodle",
+    subtitle: "Served w. soup or house salad, rice or noodle & vegetable",
     icon: "/icons/menu/hibachi-dinner.svg",
     items: [
       { name: "Hibachi Vegetable", price: "$14.95" },
@@ -432,58 +452,127 @@ const categories: MenuCategory[] = [
   },
 ];
 
-function CategoryCard({ category }: { category: MenuCategory }) {
+/* ------------------------------------------------------------------ */
+/*  Semantic grouping                                                  */
+/* ------------------------------------------------------------------ */
+
+const FEATURED_IDS = new Set(["signature-roll", "hibachi-dinner"]);
+const DRINK_IDS = new Set(["beer", "wine", "sake"]);
+
+type MenuGroup = {
+  label: string;
+  ids: string[];
+};
+
+const menuGroups: MenuGroup[] = [
+  { label: "Starters", ids: ["soup-salad", "kitchen-appetizers"] },
+  {
+    label: "Sushi",
+    ids: [
+      "sushi-sashimi-alacarte",
+      "sushi-bar-entrees",
+      "sushi-roll-handroll",
+      "signature-roll",
+    ],
+  },
+  {
+    label: "From the Grill",
+    ids: ["hibachi-dinner", "combination", "kids-menu"],
+  },
+  { label: "Sides & Sweets", ids: ["side-order", "desserts"] },
+];
+
+const drinkCategories = categories.filter((c) => DRINK_IDS.has(c.id));
+const allSidebarItems = categories.map((c) => c.title);
+
+const featuredImages: Record<string, { src: typeof signatureImg; alt: string }> = {
+  "signature-roll": { src: signatureImg, alt: "Fujiyama signature sushi rolls" },
+  "hibachi-dinner": { src: hibachiImg, alt: "Hibachi steak and shrimp" },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Components                                                         */
+/* ------------------------------------------------------------------ */
+
+function ItemRow({ item }: { item: MenuItem }) {
+  return (
+    <div className="mb-4">
+      <div className="flex items-baseline gap-2">
+        <p className="font-medium text-ink">{item.name}</p>
+        <span className="min-w-4 flex-1 translate-y-[-3px] border-b border-dotted border-line/50" />
+        <p className="shrink-0 whitespace-nowrap font-semibold text-primary">
+          {item.price}
+        </p>
+      </div>
+      {item.description && (
+        <p className="mt-0.5 text-sm text-body">{item.description}</p>
+      )}
+    </div>
+  );
+}
+
+function renderEntries(entries: MenuEntry[]) {
+  const nodes: ReactNode[] = [];
+  let pendingHeading: string | null = null;
+
+  entries.forEach((entry, i) => {
+    if ("heading" in entry) {
+      pendingHeading = entry.heading;
+      return;
+    }
+    if (pendingHeading) {
+      nodes.push(
+        <div key={i} className="break-inside-avoid">
+          <p className="mb-2 mt-2 text-xs font-medium uppercase tracking-widest text-body/70">
+            {pendingHeading}
+          </p>
+          <ItemRow item={entry} />
+        </div>,
+      );
+      pendingHeading = null;
+    } else {
+      nodes.push(
+        <div key={i} className="break-inside-avoid">
+          <ItemRow item={entry} />
+        </div>,
+      );
+    }
+  });
+
+  return nodes;
+}
+
+function StandardCard({ category }: { category: MenuCategory }) {
   return (
     <motion.div
-      variants={fadeUp}
+      id={category.id}
+      variants={fadeUp()}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
-      className="rounded-3xl border border-line bg-white p-7 md:p-11"
+      className="scroll-mt-28 rounded-2xl border border-line bg-white p-7 md:p-10"
     >
-      <div className="flex items-center gap-4">
-        <span className="flex size-13 shrink-0 items-center justify-center rounded-xl bg-accent">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={category.icon} alt="" className="size-[22px]" />
-        </span>
+      <div className="flex items-center gap-3">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={category.icon}
+          alt=""
+          className="size-6 opacity-60"
+        />
         <div>
-          <h3 className="text-2xl font-semibold tracking-tight text-ink md:text-[28px]">
+          <h3 className="text-2xl font-medium tracking-tight text-ink md:text-[28px]">
             {category.title}
           </h3>
           {category.subtitle && (
-            <p className="mt-0.5 text-sm text-body">{category.subtitle}</p>
+            <p className="mt-0.5 text-sm italic text-body">
+              {category.subtitle}
+            </p>
           )}
         </div>
       </div>
 
       <div className="mt-7 columns-1 gap-x-12 sm:columns-2">
-        {category.items.map((item, i) =>
-          "heading" in item ? (
-            <p
-              key={i}
-              className="mb-2 break-inside-avoid text-xs font-semibold uppercase tracking-wide text-body"
-            >
-              {item.heading}
-            </p>
-          ) : (
-            <div
-              key={i}
-              className="mb-[18px] flex items-start justify-between gap-4 break-inside-avoid"
-            >
-              <div>
-                <p className="font-semibold text-ink">{item.name}</p>
-                {item.description && (
-                  <p className="mt-0.5 text-sm text-body">
-                    {item.description}
-                  </p>
-                )}
-              </div>
-              <p className="shrink-0 whitespace-nowrap font-semibold text-primary">
-                {item.price}
-              </p>
-            </div>
-          ),
-        )}
+        {renderEntries(category.items)}
       </div>
 
       {category.note && (
@@ -493,9 +582,172 @@ function CategoryCard({ category }: { category: MenuCategory }) {
   );
 }
 
+function FeaturedCard({ category }: { category: MenuCategory }) {
+  const img = featuredImages[category.id];
+  return (
+    <motion.div
+      id={category.id}
+      variants={fadeUp()}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-80px" }}
+      className="scroll-mt-28"
+    >
+      <SpotlightCard
+        className="overflow-hidden rounded-2xl border border-line bg-card"
+        spotlightColor="rgba(177, 53, 39, 0.08)"
+      >
+        {img && (
+          <div className="relative aspect-[3/1] w-full overflow-hidden">
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          </div>
+        )}
+        <div className="p-7 md:p-10">
+          <div>
+            <h3 className="text-2xl font-medium tracking-tight text-ink md:text-[28px]">
+              {category.title}
+            </h3>
+            {category.subtitle && (
+              <p className="mt-0.5 text-sm italic text-body">
+                {category.subtitle}
+              </p>
+            )}
+          </div>
+
+          <div className="mt-7 columns-1 gap-x-12 sm:columns-2">
+            {renderEntries(category.items)}
+          </div>
+
+          {category.note && (
+            <p className="mt-2 text-xs text-body">{category.note}</p>
+          )}
+        </div>
+      </SpotlightCard>
+    </motion.div>
+  );
+}
+
+function DrinkItemRow({ item }: { item: MenuItem }) {
+  return (
+    <div className="mb-3">
+      <div className="flex items-baseline gap-2">
+        <p className="font-medium text-paper/90">{item.name}</p>
+        <span className="min-w-3 flex-1 translate-y-[-3px] border-b border-dotted border-paper/20" />
+        <p className="shrink-0 whitespace-nowrap font-semibold text-paper">
+          {item.price}
+        </p>
+      </div>
+      {item.description && (
+        <p className="mt-0.5 text-sm text-paper/50">{item.description}</p>
+      )}
+    </div>
+  );
+}
+
+function DrinksSection() {
+  return (
+    <motion.section
+      variants={fadeUp()}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-80px" }}
+      className="scroll-mt-28 rounded-2xl bg-[#3a332d] px-7 py-10 md:px-10 md:py-12"
+    >
+      <div className="mb-10 text-center">
+        <h2 className="text-3xl font-medium tracking-tight text-paper md:text-4xl">
+          Drinks
+        </h2>
+        <p className="mt-2 text-sm text-paper/60">Beer, wine & sake</p>
+      </div>
+      <div className="grid gap-10 md:grid-cols-3 md:gap-8">
+        {drinkCategories.map((cat) => (
+          <div key={cat.id} id={cat.id} className="scroll-mt-28">
+            <div className="mb-5 flex items-center gap-2.5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={cat.icon}
+                alt=""
+                className="size-5 brightness-0 invert opacity-50"
+              />
+              <h3 className="text-lg font-medium text-paper">{cat.title}</h3>
+            </div>
+            {cat.subtitle && (
+              <p className="-mt-3 mb-5 text-xs italic text-paper/50">
+                {cat.subtitle}
+              </p>
+            )}
+            {cat.items.map((entry, i) => {
+              if ("heading" in entry) {
+                return (
+                  <p
+                    key={i}
+                    className="mb-2 mt-4 text-xs font-medium uppercase tracking-widest text-paper/50"
+                  >
+                    {entry.heading}
+                  </p>
+                );
+              }
+              return <DrinkItemRow key={i} item={entry} />;
+            })}
+          </div>
+        ))}
+      </div>
+    </motion.section>
+  );
+}
+
+function SectionDivider({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-4">
+      <span className="h-px flex-1 bg-line/60" />
+      <span className="text-xs font-medium uppercase tracking-[0.15em] text-body/60">
+        {label}
+      </span>
+      <span className="h-px flex-1 bg-line/60" />
+    </div>
+  );
+}
+
+function MobileNav() {
+  return (
+    <div className="relative -mx-6 mb-8 xl:hidden md:-mx-8">
+      <div className="flex gap-2 overflow-x-auto px-6 pb-3 md:px-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        {categories.map((c) => (
+          <button
+            key={c.id}
+            onClick={() =>
+              document
+                .getElementById(c.id)
+                ?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }
+            className="shrink-0 rounded-full border border-line bg-white px-4 py-2 text-sm font-medium text-body whitespace-nowrap transition-colors hover:bg-card hover:text-ink"
+          >
+            {c.title}
+          </button>
+        ))}
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-paper to-transparent" />
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                               */
+/* ------------------------------------------------------------------ */
+
 export default function MenuPage() {
+  const categoryMap = Object.fromEntries(categories.map((c) => [c.id, c]));
+
   return (
     <main>
+      {/* ---- Header ---- */}
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-8">
           <Link href="/" className="flex items-center gap-2.5">
@@ -518,35 +770,165 @@ export default function MenuPage() {
               href="/"
               className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-neutral-700"
             >
-              ← Back to Home
+              &larr; Back to Home
             </Link>
           </div>
         </div>
       </header>
 
-      <section className="relative overflow-hidden bg-accent pb-10 pt-20 md:pb-14 md:pt-28">
+      {/* ---- Hero — dark photo background ---- */}
+      <section className="relative overflow-hidden bg-ink py-20 md:py-28">
+        <div className="absolute inset-0">
+          <Image
+            src={heroImg}
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-40"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/40 to-ink/80" />
+        </div>
         <SideDecor side="right" className="-right-10 top-16 w-40 md:w-56">
-          <FujiArt className="w-full" />
+          <FujiArt className="w-full text-paper/10" />
         </SideDecor>
         <SideDecor side="left" className="-left-8 top-16 w-24 md:w-32">
-          <LanternArt className="w-full" />
+          <LanternArt className="w-full text-paper/10" />
         </SideDecor>
         <div className="relative mx-auto max-w-2xl px-6 text-center md:px-8">
-          <h1 className="text-balance text-5xl font-semibold tracking-tight text-ink md:text-6xl">
+          <motion.span
+            variants={fadeUp(0)}
+            initial="hidden"
+            animate="visible"
+            className="inline-flex rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium text-paper backdrop-blur-sm"
+          >
+            Hibachi &amp; Sushi
+          </motion.span>
+          <motion.h1
+            variants={fadeUp(0.1)}
+            initial="hidden"
+            animate="visible"
+            className="mt-6 text-balance text-5xl font-medium tracking-tight text-paper md:text-6xl"
+          >
             Our Menu
-          </h1>
-          <p className="mt-5 text-pretty text-lg text-body">
+          </motion.h1>
+          <motion.p
+            variants={fadeUp(0.2)}
+            initial="hidden"
+            animate="visible"
+            className="mt-5 text-pretty text-lg text-paper/80"
+          >
             Hibachi grilled to order, sushi rolled fresh, and everything made
             the same way we&apos;ve made it since 2016.
-          </p>
+          </motion.p>
         </div>
       </section>
 
+      {/* ---- Menu body ---- */}
       <section className="bg-paper pb-16 pt-10 md:pb-24 md:pt-14">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 md:px-8">
-          {categories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
-          ))}
+        <div className="mx-auto grid max-w-[100rem] gap-16 px-6 md:px-8 xl:grid-cols-[16rem_minmax(0,1fr)_16rem]">
+          {/* Left sidebar — desktop only */}
+          <aside className="hidden xl:block">
+            <div className="sticky top-28">
+              <LineSidebar
+                items={allSidebarItems}
+                accentColor="var(--color-primary)"
+                textColor="var(--color-body)"
+                markerColor="var(--color-line)"
+                showMarker
+                showIndex={false}
+                proximityRadius={40}
+                maxShift={10}
+                itemGap={14}
+                fontSize={0.95}
+                markerLength={36}
+                smoothing={60}
+                onItemClick={(index) => {
+                  document
+                    .getElementById(categories[index].id)
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+              />
+            </div>
+          </aside>
+
+          {/* Center content */}
+          <div className="mx-auto w-full max-w-6xl">
+            {/* Mobile horizontal nav */}
+            <MobileNav />
+
+            {/* Grouped food sections */}
+            {menuGroups.map((group, gi) => (
+              <div key={group.label}>
+                {gi > 0 && (
+                  <div className="my-12 md:my-16">
+                    <SectionDivider label={group.label} />
+                  </div>
+                )}
+                {gi === 0 && (
+                  <div className="mb-6">
+                    <SectionDivider label={group.label} />
+                  </div>
+                )}
+                <div className="grid gap-6">
+                  {group.ids.map((id) => {
+                    const cat = categoryMap[id];
+                    if (!cat) return null;
+                    if (FEATURED_IDS.has(id)) {
+                      return <FeaturedCard key={id} category={cat} />;
+                    }
+                    return <StandardCard key={id} category={cat} />;
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {/* Drinks band */}
+            <div className="my-12 md:my-16">
+              <DrinksSection />
+            </div>
+          </div>
+
+          {/* Right sidebar — desktop only */}
+          <aside className="hidden xl:block">
+            <div className="sticky top-28 space-y-6">
+              <div className="rounded-2xl border border-line bg-card p-6">
+                <h3 className="text-sm font-semibold text-ink">
+                  Call to Order
+                </h3>
+                <a
+                  href="tel:+13525691017"
+                  className="mt-3 flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+                >
+                  <PhoneIcon className="h-4 w-4" />
+                  (352) 569-1017
+                </a>
+                <div className="mt-4 border-t border-line pt-4">
+                  <div className="flex items-center gap-1.5 text-xs text-body">
+                    <ClockIcon className="h-3.5 w-3.5" />
+                    Hours
+                  </div>
+                  <div className="mt-2 space-y-1 text-xs text-body">
+                    <div className="flex justify-between">
+                      <span>Tue – Sat</span>
+                      <span>11 AM – 9:30 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday</span>
+                      <span>12 PM – 9 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Monday</span>
+                      <span className="text-body/60">Closed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <SeigaihaArt className="h-auto w-20 text-ink/8" />
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
     </main>
