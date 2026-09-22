@@ -543,13 +543,9 @@ function renderEntries(entries: MenuEntry[]) {
 
 function StandardCard({ category }: { category: MenuCategory }) {
   return (
-    <motion.div
+    <div
       id={category.id}
-      variants={fadeUp()}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-      className="scroll-mt-28 rounded-2xl border border-line bg-white p-7 md:p-10"
+      className="scroll-mt-28 overflow-hidden rounded-2xl border border-line bg-white p-5 sm:p-7 md:p-10"
     >
       <div className="flex items-center gap-3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -577,19 +573,15 @@ function StandardCard({ category }: { category: MenuCategory }) {
       {category.note && (
         <p className="mt-2 text-xs text-body">{category.note}</p>
       )}
-    </motion.div>
+    </div>
   );
 }
 
 function FeaturedCard({ category }: { category: MenuCategory }) {
   const img = featuredImages[category.id];
   return (
-    <motion.div
+    <div
       id={category.id}
-      variants={fadeUp()}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
       className="scroll-mt-28"
     >
       <SpotlightCard
@@ -608,7 +600,7 @@ function FeaturedCard({ category }: { category: MenuCategory }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </div>
         )}
-        <div className="p-7 md:p-10">
+        <div className="p-5 sm:p-7 md:p-10">
           <div>
             <h3 className="text-2xl font-medium tracking-tight text-ink md:text-[28px]">
               {category.title}
@@ -629,7 +621,7 @@ function FeaturedCard({ category }: { category: MenuCategory }) {
           )}
         </div>
       </SpotlightCard>
-    </motion.div>
+    </div>
   );
 }
 
@@ -652,12 +644,8 @@ function DrinkItemRow({ item }: { item: MenuItem }) {
 
 function DrinksSection() {
   return (
-    <motion.section
-      variants={fadeUp()}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-      className="scroll-mt-28 rounded-2xl bg-[#3a332d] px-7 py-10 md:px-10 md:py-12"
+    <section
+      className="scroll-mt-28 overflow-hidden rounded-2xl bg-[#3a332d] px-5 py-8 sm:px-7 sm:py-10 md:px-10 md:py-12"
     >
       <div className="mb-10 text-center">
         <h2 className="text-3xl font-medium tracking-tight text-paper md:text-4xl">
@@ -698,7 +686,7 @@ function DrinksSection() {
           </div>
         ))}
       </div>
-    </motion.section>
+    </section>
   );
 }
 
@@ -745,7 +733,7 @@ export default function MenuPage() {
   const categoryMap = Object.fromEntries(categories.map((c) => [c.id, c]));
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       {/* ---- Header ---- */}
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-8">
