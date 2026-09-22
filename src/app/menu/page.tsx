@@ -784,7 +784,7 @@ export default function MenuPage() {
             alt=""
             fill
             priority
-            className="object-cover opacity-40"
+            className="object-cover object-[70%_center] opacity-50"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/40 to-ink/80" />
